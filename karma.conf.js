@@ -123,7 +123,7 @@ module.exports = function (config) {
         const allCustomLaunchers = Object.assign({}, chrome, firefox, safari, edge)
         const firstLauncher = Object.entries(allCustomLaunchers)[0]
         const customLaunchers = {
-            [firstLauncher[0]]: firstLauncher[1]
+            [firstLauncher[0]]: firstLauncher[1],
         }
 
         // Override config for CI.

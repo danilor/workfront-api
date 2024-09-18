@@ -18,33 +18,32 @@
  * Logs in and logs out
  */
 
-'use strict';
-var Workfront = require('./../../');
-var util = require('util');
+'use strict'
+var Workfront = require('./../../')
+var util = require('util')
 
 var instance = new Workfront.NodeApi({
     url: 'http://localhost:8080',
-    version: '7.0'
-});
+    version: '7.0',
+})
 
-
-console.log('Logs in and logs out\n');
-util.log('Logging in ...');
+console.log('Logs in and logs out\n')
+util.log('Logging in ...')
 instance.login('new@user.attask', 'user').then(
-	function(data) {
-		util.log('Logging out ...');
-		instance.logout().then(
-			function() {
-				util.log('Logout success.');
-			},
-			function(error) {
-				util.log('Logout failure. Received data:');
-				console.log(util.inspect(error, {colors:true}));
-			}
-		);
-	},
-	function(error) {
-		util.log('Login failure. Received data:');
-		console.log(util.inspect(error, {colors:true}));
-	}
-);
+    function (data) {
+        util.log('Logging out ...')
+        instance.logout().then(
+            function () {
+                util.log('Logout success.')
+            },
+            function (error) {
+                util.log('Logout failure. Received data:')
+                console.log(util.inspect(error, {colors: true}))
+            },
+        )
+    },
+    function (error) {
+        util.log('Login failure. Received data:')
+        console.log(util.inspect(error, {colors: true}))
+    },
+)

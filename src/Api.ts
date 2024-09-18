@@ -30,6 +30,7 @@ export interface IHttpOptions {
         sessionID?: string
         'X-XSRF-TOKEN'?: string
         apiKey?: string
+        Authorization?: string
     }
 }
 export interface IApiConfig {
@@ -420,14 +421,14 @@ export class Api {
         path: string,
         params,
         fields: TFields = [],
-        method: string = Api.Methods.GET
+        method: string = Api.Methods.GET,
     ): Promise<any> {
         const clonedParams = {...params}
 
         const options = this.getOptions(
             path,
             clonedParams,
-            this._uriGenerationMode ? Api.Methods.GET : method
+            this._uriGenerationMode ? Api.Methods.GET : method,
         )
 
         const stringifiedFields = this.getFields(fields)
@@ -439,7 +440,7 @@ export class Api {
 
         const {bodyParams, queryString, contentType} = this.populateQueryStringAndBodyParams(
             clonedParams,
-            options
+            options,
         )
         if (contentType) {
             headers.append('Content-Type', contentType)
@@ -501,17 +502,17 @@ export class Api {
     batch(
         uriCollector: (batchApi: IBatchApi) => string[],
         isAtomic?: false,
-        isConcurrent?: boolean
+        isConcurrent?: boolean,
     ): Promise<any[]>
     batch(
         uriCollector: (batchApi: IBatchApi) => string[],
         isAtomic?: true,
-        isConcurrent?: boolean
+        isConcurrent?: boolean,
     ): Promise<void>
     batch(
         uriCollector: (batchApi: IBatchApi) => string[],
         isAtomic?: boolean,
-        isConcurrent?: boolean
+        isConcurrent?: boolean,
     ): Promise<any[] | void> {
         const batchApi = batchApiFactory(this)
         const uris = uriCollector(batchApi)
@@ -526,7 +527,7 @@ export class Api {
                 concurrent: !!isConcurrent,
             },
             undefined,
-            Api.Methods.POST
+            Api.Methods.POST,
         )
         if (isAtomic) {
             return req.then((result) => {
@@ -591,7 +592,10 @@ export class Api {
             headers.append('X-XSRF-TOKEN', this._httpOptions.headers['X-XSRF-TOKEN'])
         } else if (this._httpOptions.headers.apiKey) {
             headers.append('apiKey', this._httpOptions.headers.apiKey)
+        } else if (this._httpOptions.headers.Authorization) {
+            headers.append('Authorization', this._httpOptions.headers.Authorization)
         }
+
         return headers
     }
 
@@ -685,7 +689,7 @@ export interface IBatchApi {
         objID: string,
         updates: object,
         fields?: TFields,
-        options?: string[]
+        options?: string[],
     ) => string
     count: (objCode: string, query?: object) => string
     create: (objCode: string, params: any, fields?: TFields) => string
@@ -710,7 +714,7 @@ function batchApiFactory(api: Api): IBatchApi {
             objID: string,
             updates: object,
             fields?: TFields,
-            options?: string[]
+            options?: string[],
         ) => {
             return apiClone.copy(objCode, objID, updates, fields, options) as any as string
         },
@@ -759,7 +763,7 @@ export type TFailureHandler = (err: any) => never
 export function makeFetchCall(url: string, fetchOptions: RequestInit) {
     return fetch(url, {...fetchOptions, credentials: 'same-origin'}).then(
         ResponseHandler.success,
-        ResponseHandler.failure
+        ResponseHandler.failure,
     )
 }
 
@@ -791,7 +795,7 @@ export const ResponseHandler: {
                         status: response.status,
                         message: response.statusText,
                     }
-                }
+                },
             )
         }
     },

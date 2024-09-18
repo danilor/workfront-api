@@ -37,12 +37,12 @@ describe('getApiKey', function () {
         fetchMock.mock(
             (url, opts) => JSON.stringify(opts.body).indexOf('getApiKey') !== -1,
             '{"data": {"result": ""}}',
-            {name: 'getApiKey'}
+            {name: 'getApiKey'},
         )
         fetchMock.mock(
             (url, opts) => JSON.stringify(opts.body).indexOf('generateApiKey') !== -1,
             '{"data": {"result": "baz"}}',
-            {name: 'generateApiKey'}
+            {name: 'generateApiKey'},
         )
 
         this.api.getApiKey('foo', 'bar').then(function (apiKey) {
@@ -56,12 +56,12 @@ describe('getApiKey', function () {
         fetchMock.mock(
             (url, opts) => JSON.stringify(opts.body).indexOf('getApiKey') !== -1,
             '{"data": {"result": "baz"}}',
-            {name: 'getApiKey'}
+            {name: 'getApiKey'},
         )
         fetchMock.mock(
             (url, opts) => JSON.stringify(opts.body).indexOf('generateApiKey') !== -1,
             '{"data": {"result": "baz"}}',
-            {name: 'generateApiKey'}
+            {name: 'generateApiKey'},
         )
 
         this.api.getApiKey('foo', 'bar').then((apiKey) => {
@@ -79,12 +79,12 @@ describe('getApiKey', function () {
         fetchMock.mock(
             (url, opts) => JSON.stringify(opts.body).indexOf('getApiKey') !== -1,
             '{"data": {"result": "baz"}}',
-            {name: 'getApiKey'}
+            {name: 'getApiKey'},
         )
         fetchMock.mock(
             (url, opts) => JSON.stringify(opts.body).indexOf('clearApiKey') !== -1,
             '{"data": {"success": true}}',
-            {name: 'clearApiKey'}
+            {name: 'clearApiKey'},
         )
 
         this.api.getApiKey('foo', 'bar').then((apiKey) => {
@@ -101,12 +101,12 @@ describe('getApiKey', function () {
         fetchMock.mock(
             (url, opts) => JSON.stringify(opts.body).indexOf('getApiKey') !== -1,
             '{"data": {"result": ""}}',
-            {name: 'getApiKey'}
+            {name: 'getApiKey'},
         )
         fetchMock.mock(
             (url, opts) => JSON.stringify(opts.body).indexOf('generateApiKey') !== -1,
             '{"data": {"result": "baz"}}',
-            {name: 'generateApiKey'}
+            {name: 'generateApiKey'},
         )
         return this.api.getApiKey('foo', 'bar', 'baz').then(function () {
             const getApiKeyOpts = fetchMock.lastOptions('getApiKey')
@@ -119,12 +119,12 @@ describe('getApiKey', function () {
         fetchMock.mock(
             (url, opts) => JSON.stringify(opts.body).indexOf('getApiKey') !== -1,
             '{"data": {"result": ""}}',
-            {name: 'getApiKey'}
+            {name: 'getApiKey'},
         )
         fetchMock.mock(
             (url, opts) => JSON.stringify(opts.body).indexOf('generateApiKey') !== -1,
             '{"data": {"result": "baz"}}',
-            {name: 'generateApiKey'}
+            {name: 'generateApiKey'},
         )
         return this.api.getApiKey('foo', 'bar').then(function () {
             const getApiKeyOpts = fetchMock.lastOptions('getApiKey')

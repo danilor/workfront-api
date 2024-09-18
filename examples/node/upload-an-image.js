@@ -56,17 +56,17 @@ instance.login('new@user.attask', 'user').then(
                         function (error) {
                             util.log('Document creation failure. Received data:')
                             console.log(util.inspect(error, {colors: true}))
-                        }
+                        },
                     )
             },
             function (error) {
                 util.log('Upload failure. Received data:')
                 console.log(util.inspect(error, {colors: true}))
-            }
+            },
         )
     },
     function (error) {
         util.log('Login failure. Received data:')
         console.log(util.inspect(error, {colors: true}))
-    }
+    },
 )

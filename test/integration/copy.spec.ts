@@ -53,7 +53,7 @@ describe('Copy', function () {
                 should(url).endWith('foo')
                 should(opts.method).equal('POST')
                 should(opts.body).containEql(
-                    'updates=' + encodeURIComponent('{"name":"Copy of bar"}')
+                    'updates=' + encodeURIComponent('{"name":"Copy of bar"}'),
                 )
                 should(opts.body).containEql('copySourceID=bar')
                 should(opts.body).not.containEql('options')
@@ -74,7 +74,7 @@ describe('Copy', function () {
                 should(opts.body).not.containEql('updates')
                 should(opts.body).containEql('copySourceID=bar')
                 should(opts.body).containEql(
-                    'options=' + encodeURIComponent(JSON.stringify(copyOptions))
+                    'options=' + encodeURIComponent(JSON.stringify(copyOptions)),
                 )
             })
         })

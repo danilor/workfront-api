@@ -18,34 +18,33 @@
  * Logs in, then search for projects with percentComplete > 0
  */
 
-'use strict';
-var Workfront = require('./../../');
-var util = require('util');
+'use strict'
+var Workfront = require('./../../')
+var util = require('util')
 
 var instance = new Workfront.NodeApi({
     url: 'http://localhost:8080',
-    version: '7.0'
-});
+    version: '7.0',
+})
 
-
-console.log('Logs in, then search for projects with percentComplete > 0\n');
-util.log('Logging in ...');
+console.log('Logs in, then search for projects with percentComplete > 0\n')
+util.log('Logging in ...')
 instance.login('new@user.attask', 'user').then(
-	function(data) {
-		util.log('Searching for projects with percentComplete > 0 ...');
-		instance.search('proj', {percentComplete: 0, percentComplete_Mod: 'gt'}).then(
-			function(data) {
-				util.log('Search success. Received data:');
-				console.log(util.inspect(data, {colors:true}));
-			},
-			function(error) {
-				util.log('Search failure. Received data:');
-				console.log(util.inspect(error, {colors:true}));
-			}
-		);
-	},
-	function(error) {
-		util.log('Login failure. Received data:');
-		console.log(util.inspect(error, {colors:true}));
-	}
-);
+    function (data) {
+        util.log('Searching for projects with percentComplete > 0 ...')
+        instance.search('proj', {percentComplete: 0, percentComplete_Mod: 'gt'}).then(
+            function (data) {
+                util.log('Search success. Received data:')
+                console.log(util.inspect(data, {colors: true}))
+            },
+            function (error) {
+                util.log('Search failure. Received data:')
+                console.log(util.inspect(error, {colors: true}))
+            },
+        )
+    },
+    function (error) {
+        util.log('Login failure. Received data:')
+        console.log(util.inspect(error, {colors: true}))
+    },
+)

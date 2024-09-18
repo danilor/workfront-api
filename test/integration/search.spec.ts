@@ -59,7 +59,7 @@ describe('Search', function () {
         this.api.search(objCode, query)
         const [url, opts] = fetchMock.lastCall('search')
         should(url).endWith(
-            `${objCode}/search?${criteriaField}${MOD}=${Operators.GREATERTHAN}&${criteriaField}=${criteriaValue}`
+            `${objCode}/search?${criteriaField}${MOD}=${Operators.GREATERTHAN}&${criteriaField}=${criteriaValue}`,
         )
         should(opts.body).be.null()
     })

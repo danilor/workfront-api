@@ -49,7 +49,7 @@ describe('Batch', function () {
                     {
                         foo: 'bar',
                     },
-                    ['*', 'zzz:*']
+                    ['*', 'zzz:*'],
                 ),
                 batchApi.edit('PROJ', 'foobar', {
                     name: 'api test 2',
@@ -66,7 +66,7 @@ describe('Batch', function () {
                     status_GroupBy: true,
                 }),
             ],
-            false
+            false,
         )
         should(fetchMock.calls().length).equal(1)
     })

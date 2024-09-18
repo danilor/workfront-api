@@ -89,8 +89,8 @@ describe('E2E Tests', function () {
                         Promise.all([
                             this.aspInstance.remove('Reseller', resellerID),
                             this.aspInstance.remove('AccountRep', accountRepID),
-                        ])
-                    )
+                        ]),
+                    ),
             )
     })
 
@@ -300,8 +300,8 @@ describe('E2E Tests', function () {
                     .search('PROJ', query, ['ID'])
                     .then((data) =>
                         Promise.all(
-                            data.map((project) => this.instance.remove('PROJ', project.ID, true))
-                        )
+                            data.map((project) => this.instance.remove('PROJ', project.ID, true)),
+                        ),
                     )
             })
         })
@@ -462,7 +462,7 @@ describe('E2E Tests', function () {
                             },
                         ],
                     }),
-                })
+                }),
             )
         })
     })
@@ -494,7 +494,7 @@ describe('E2E Tests', function () {
                     .then((data) => {
                         should(data).have.properties('ID', 'objCode')
                         return instance.remove(data.objCode, data.ID, true)
-                    })
+                    }),
             )
         })
 

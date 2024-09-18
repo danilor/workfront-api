@@ -19,48 +19,58 @@
  * This examples is similar to create-edit-delete-group.js, but this one makes use of promise chaining (pc).
  */
 
-'use strict';
-var Workfront = require('./../../');
-var util = require('util');
+'use strict'
+var Workfront = require('./../../')
+var util = require('util')
 
 var instance = new Workfront.NodeApi({
     url: 'http://localhost:8080',
-    version: '5.0'
-});
+    version: '5.0',
+})
 
+var login = function () {
+    util.log('Logging in ...')
+    return instance.login('new@user.attask', 'user')
+}
 
-var login = function() {
-	util.log('Logging in ...');
-	return instance.login('new@user.attask', 'user');
-};
+var createGroup = function () {
+    util.log('Creating new group ...')
+    return instance.create('group', {name: 'Api Group'})
+}
 
-var createGroup = function() {
-	util.log('Creating new group ...');
-	return instance.create('group', {name: 'Api Group'});
-};
+var editGroup = function (data) {
+    util.log('Create success. Received data:')
+    console.log(util.inspect(data, {colors: true}))
+    return instance.edit(
+        'group',
+        data.ID,
+        {
+            name: 'Api Group 2',
+        },
+        ['ID'],
+    )
+}
 
-var editGroup = function(data) {
-	util.log('Create success. Received data:');
-	console.log(util.inspect(data, {colors:true}));
-	return instance.edit('group', data.ID, {
-		name: 'Api Group 2'
-	}, ['ID'])
-};
+var deleteGroup = function (data) {
+    util.log('Edit success. Received data:')
+    console.log(util.inspect(data, {colors: true}))
+    return instance.remove('group', data.ID)
+}
 
-var deleteGroup = function(data) {
-	util.log('Edit success. Received data:');
-	console.log(util.inspect(data, {colors:true}));
-	return instance.remove('group', data.ID);
-};
+console.log(
+    'Logs in, then creates a group "Api Group", edits the name to read "Api Group 2", then deletes it\n',
+)
 
-console.log('Logs in, then creates a group "Api Group", edits the name to read "Api Group 2", then deletes it\n');
-
-login().then(createGroup).then(editGroup).then(deleteGroup).then(
-	function() {
-		util.log('Remove success');
-	},
-	function(error) {
-		util.log('Error. Received data:');
-		console.log(util.inspect(error, {colors:true}));
-	}
-);
+login()
+    .then(createGroup)
+    .then(editGroup)
+    .then(deleteGroup)
+    .then(
+        function () {
+            util.log('Remove success')
+        },
+        function (error) {
+            util.log('Error. Received data:')
+            console.log(util.inspect(error, {colors: true}))
+        },
+    )
