@@ -1,17 +1,39 @@
 # workfront-api
 
-[![NPM downloads][npm-downloads-image]][npm-url]
-[![Apache v2 License][license-image]][license-url]
-![workflow](https://github.com/workfront/workfront-api/actions/workflows/main.yml/badge.svg)
-[![Coverage][codecov-image]][codecov-url]
-[![Code Climate][code-climate-image]][code-climate-url]
-[![Build Status][saucelabs-badge]][saucelabs-url]
+This project is a CLONE from the original/official [WORKFRONT API](https://github.com/Workfront) library.
 
-[![Build Status][saucelabs-matrix]][saucelabs-url]
+You can get more information about this API on the official APP.
 
-A client for Workfront API which can be used in both server (NodeJS) and client (browsers).
+## Why is this a clone?
 
-If used in browser environment you may need to polyfill Promises (see ES6 Promise for polyfills) and fetch ([whatwg-fetch](https://github.com/fis-components/whatwg-fetch)).
+Right now, Adobe Workfront is implementing a new way to authenticate with the workfront services different from API KEY and USERNAME and PASSWORD.
+This way is using OAUTH2.0 authentication mechanisms to authenticate and
+being able to use the API.
+
+Sadly, it seems like the official Workfront API Node
+Library does not support this new way of authentication, and the main issue here
+is that the headers on the request cannot be modified at will.
+So, the change was focused on
+the API.ts file to add the "Authorization" header to the request.
+
+That is the only change. This won't handle the OAUTH2.0 authentication by itself,
+but it will allow you to add the header to the request.
+
+To handle the OAUTH2.0 authentication, you will need to implement it by yourself using the
+following link:
+
+https://ims-na1.adobelogin.com/ims/token/v3 [POST]
+
+[BODY]
+
+```
+{
+    "client_id": "YOUR_CLIENT_ID"
+    "client_secret": "YOUR_CLIENT_SECRET",
+    "scope": "YOUR_SCOPE",
+    "grant_type": "client_credentials"
+}
+```
 
 ## Usage
 
@@ -36,83 +58,3 @@ console.log(Workfront)
 ## Documentation
 
 API documentation is available at [http://workfront.github.io/workfront-api/](http://workfront.github.io/workfront-api/).
-
-## Examples
-
-A number of examples can be found under [examples](examples) directory. It includes examples for both [node](examples/node) and [browser](examples/browser) environments.  
-In order to run these examples clone a copy of workfront-api repository:
-
-```shell script
-git clone git://github.com/Workfront/workfront-api.git
-```
-
-#### Running [node](examples/node) examples
-
-First enter into `workfront-api` directory and install all the dependencies:
-
-```
-cd workfront-api
-yarn
-```
-
-Use `node` to run the examples. For examples:
-
-```
-node examples/node/get-user-count.js
-```
-
-Each example script outputs all its results into console and contains comments in the source code explaining what is happening in more details.
-
-#### Running [browser](examples/browser) examples
-
-To start supplied webserver type:
-
-```shell script
-npm start
-```
-
-Visit [http://localhost:8000/examples/browser/](http://localhost:8000/examples/browser/) to see list of all examples available for browser.
-
-## Contributing
-
-We welcome contributions of all kinds from anyone. It can be either new example or fix or documentation improvement. Please read these guidelines:
-
-### Bug Reports
-
-A bug is a _demonstrable problem_ that is caused by the code in the repository. Good bug reports are extremely helpful - thank you! Please make sure to check these points to make a good bug report:
-
-1. **Use the GitHub issue search** &mdash; check if the issue has already been
-   reported.
-1. **Isolate the problem** &mdash; ideally create a [reduced test
-   case](https://css-tricks.com/reduced-test-cases/).
-1. A good bug report shouldn't leave others needing to chase you up for more information. Please try to be as detailed as possible in your report.
-
-### Feature requests
-
-Feature requests are welcome. But take a moment to find out whether your idea
-fits with the scope and aims of the project. It's up to _you_ to make a strong
-case to convince the project's developers of the merits of this feature. Please
-provide as much detail and context as possible.
-
-## License
-
-Copyright (c) 2015-2019 Workfront
-
-Licensed under the Apache License, Version 2.0.
-See the top-level file `LICENSE` and
-(http://www.apache.org/licenses/LICENSE-2.0).
-
-[license-image]: http://img.shields.io/badge/license-APv2-blue.svg?style=flat-square
-[license-url]: LICENSE
-[npm-url]: https://www.npmjs.org/package/workfront-api
-[npm-version-image]: https://img.shields.io/npm/v/workfront-api.svg?style=flat-square
-[npm-downloads-image]: https://img.shields.io/npm/dm/workfront-api.svg?style=flat-square
-[travis-url]: https://travis-ci.com/Workfront/workfront-api
-[travis-image]: https://img.shields.io/travis/Workfront/workfront-api.svg?style=flat-square
-[codecov-url]: https://codecov.io/gh/Workfront/workfront-api
-[codecov-image]: https://codecov.io/gh/Workfront/workfront-api/branch/master/graph/badge.svg
-[code-climate-url]: https://codeclimate.com/github/Workfront/workfront-api
-[code-climate-image]: https://img.shields.io/codeclimate/maintainability/Workfront/workfront-api?style=flat-square
-[saucelabs-badge]: https://saucelabs.com/buildstatus/citizensas
-[saucelabs-url]: https://saucelabs.com/beta/builds/1b8be6f71455499c82f02afc881e6c14
-[saucelabs-matrix]: https://saucelabs.com/browser-matrix/citizensas.svg
